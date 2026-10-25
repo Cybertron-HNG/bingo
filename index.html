@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bingo · start.ng</title>
+  <meta name="description" content="Host a bingo, share the code, and play live with up to 100 people. Free in your browser on start.ng.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://start.ng/kit.js" defer></script>
+</head>
+<body>
+  <main id="app">
+    <h1>Bingo</h1>
+
+    <!-- the lobby -->
+    <section id="lobby">
+      <p class="lead">Host a bingo for a room of up to 100 people: classic numbers, or your own words for a class or a party.</p>
+      <p class="invite" id="invite" hidden></p>
+      <form id="join" class="join" autocomplete="off">
+        <label for="code">Have a code?</label>
+        <input id="code" name="code" maxlength="6" autocapitalize="characters" spellcheck="false" placeholder="K7M2QX">
+        <button type="submit" class="primary">Join</button>
+      </form>
+      <div class="buttons">
+        <button type="button" id="host">Host a bingo</button>
+      </div>
+      <p class="note">You need to be signed in with start.ng. The host starts the game and start.ng draws the numbers. Everyone gets their own card.</p>
+      <p class="problem" id="lobby-problem" role="status" hidden></p>
+      <button type="button" id="signin" hidden>Sign in with start.ng</button>
+    </section>
+
+    <!-- the host picks the kind of game -->
+    <section id="builder" class="left" hidden>
+      <fieldset class="choice">
+        <legend>What is on the cards?</legend>
+        <label><input type="radio" name="mode" value="numbers" checked> Numbers (1 to 75)</label>
+        <label><input type="radio" name="mode" value="terms"> My own words</label>
+      </fieldset>
+      <label class="field" id="terms-field" hidden>Your words, one on each line (24 to 100)
+        <textarea id="terms" rows="8" placeholder="Photosynthesis&#10;Mitochondria&#10;..."></textarea>
+      </label>
+      <label class="field">Seconds between draws
+        <select id="speed">
+          <option value="4">4 (fast)</option>
+          <option value="8" selected>8</option>
+          <option value="12">12</option>
+          <option value="20">20 (slow)</option>
+          <option value="30">30</option>
+        </select>
+      </label>
+      <label class="field">How do you win?
+        <select id="pattern">
+          <option value="line" selected>A line: across, down or corner to corner</option>
+          <option value="full">The full card</option>
+        </select>
+      </label>
+      <div class="buttons">
+        <button type="button" id="create" class="primary">Make the room</button>
+        <button type="button" id="builder-cancel" class="link">Cancel</button>
+      </div>
+      <p class="problem" id="builder-problem" role="status" hidden></p>
+    </section>
+
+    <!-- waiting for people -->
+    <section id="waiting" hidden>
+      <p class="lead" id="waiting-title">Share this code</p>
+      <div class="code-box">
+        <span class="code" id="room-code" aria-label="Room code"></span>
+        <button type="button" id="copy">Copy invite link</button>
+      </div>
+      <p class="count-line" id="people"></p>
+      <ul class="names" id="names"></ul>
+      <div class="buttons">
+        <button type="button" id="start" class="primary" hidden>Start the game</button>
+        <button type="button" id="wait-cancel" class="link">Leave</button>
+      </div>
+      <p class="note" id="waiting-note"></p>
+    </section>
+
+    <!-- the game -->
+    <section id="game" hidden aria-label="The bingo game">
+      <div class="called-now" id="last" aria-live="polite"></div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <div class="bcard" id="card" hidden>
+        <div class="letters" id="letters" aria-hidden="true"><span>B</span><span>I</span><span>N</span><span>G</span><span>O</span></div>
+        <div class="grid" id="grid"></div>
+      </div>
+      <div class="buttons">
+        <button type="button" id="claim" class="primary" hidden>BINGO!</button>
+        <button type="button" id="draw" hidden>Draw now</button>
+        <button type="button" id="pause" hidden>Pause</button>
+        <button type="button" id="share" hidden>Share on X</button>
+        <button type="button" id="back" class="primary" hidden>Back to the lobby</button>
+      </div>
+      <p class="note" id="game-note" role="status" aria-live="polite"></p>
+      <ol class="history" id="history" aria-label="Called so far"></ol>
+    </section>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
